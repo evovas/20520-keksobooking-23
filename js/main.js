@@ -1,16 +1,8 @@
+const getRandomNumber = (min = 0, max = 0) => Math.random() * (max - min) + min;
 
-// Идея взята отсюда https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Math/random
-function getRandomNumber(min, max, decimalPlaceNumber) {
-  const exponent = Math.pow(10, decimalPlaceNumber);
+const getRandomIntInclusive = (min = 0, max = 0) => Math.floor(getRandomNumber(min, max + 1));
 
-  min = Math.ceil(min * exponent);
-  max = Math.floor(max * exponent);
+const getRandomDecimalPlace = (min = 0, max = 0, decimalPlaceNumber = 0) => Number(getRandomNumber(min, max).toFixed(decimalPlaceNumber));
 
-  return (Math.floor(Math.random() * (max - min + 1)) + min) / exponent;
-
-  //Обработку ошибок типа перемены местами большего и меньшего можно будет выполнить с помощью try..throw..catch
-  //Я попробовал, вроде их так отлавливать можно, но пока не знаю как сделать это правильно
-}
-
-getRandomNumber(10, 100, 3);
-
+getRandomIntInclusive(1, 3);
+getRandomDecimalPlace(1.1, 1.2, 1);

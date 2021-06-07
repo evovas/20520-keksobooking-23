@@ -17,7 +17,7 @@ function getRandomElements (count, array) {
   return currentArray;
 }
 
-const avatars = generateAvatars(8);
+const avatars = generateAvatars(10);
 
 const TYPES_OF_HOUSE = [
   'palace',
@@ -51,7 +51,7 @@ const PHOTOS = [
 function generateAnnouncement (index) {
   const announcement = {
     author : {
-      avatar : avatars[getRandomIntInclusive(0, avatars.length - 1)],
+      avatar : avatars[index],
     },
     offer : {
       title : `Объявление об аренде №${  index}`,
@@ -77,7 +77,7 @@ function generateAnnouncement (index) {
 
 const announcements = Array(10).fill('').map((item, index) => generateAnnouncement(index));
 
+//Код для прохождения проверки линтером
 announcements.slice();
-
 getRandomIntInclusive(1, 3);
 getRandomDecimalPlace(1.1, 1.2, 1);

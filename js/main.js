@@ -54,7 +54,7 @@ function generateAnnouncement (index) {
       avatar : avatars[index],
     },
     offer : {
-      title : `Объявление об аренде №${  index}`,
+      title : `Объявление об аренде №${  index + 1}`,
       address : '',
       price : getRandomIntInclusive(10000, 100000),
       type : TYPES_OF_HOUSE[getRandomIntInclusive(0, TYPES_OF_HOUSE.length - 1)],

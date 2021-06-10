@@ -9,6 +9,8 @@ const MIN_LAT = 35.65;
 const MAX_LAT = 35.7;
 const MIN_LNG = 139.7;
 const MAX_LNG = 139.8;
+const LOCATION_ACCURACY = 5;
+
 
 const TYPES_OF_HOUSE = [
   'palace',
@@ -43,15 +45,13 @@ const getRandomNumber = (min = 0, max = 0) => Math.random() * (max - min) + min;
 
 const getRandomInt = (min = 0, max = 0) => Math.floor(getRandomNumber(min, max + 1));
 
-const getRandomDecimalPlace = (min = 0, max = 0, decimalPlaceNumber = 1) => Number(getRandomNumber(min, max).toFixed(decimalPlaceNumber));
+const getRandomDecimalPlace = (min = 0, max = 0, decimalPlaceNumber = 0) => getRandomNumber(parseFloat(min), parseFloat(max)).toFixed(decimalPlaceNumber);
 
-const getRandomElement = function (array) {
-  return array[getRandomInt(0, array.length - 1)];
-};
+const getRandomElement = (array) => array[getRandomInt(0, array.length - 1)];
 
 const getRandomElements = function (array = [], count = 0) {
   const randomElements = new Set();
-  if (count || array.length === 0) {
+  if (count && array.length !== 0) {
     for (let ind = 0; ind < count; ind++) {
       randomElements.add(getRandomElement(array));
     }
@@ -59,18 +59,22 @@ const getRandomElements = function (array = [], count = 0) {
   return Array.from(randomElements);
 };
 
-const generateAnnouncements = function (count, minLat, maxLat, minLng, maxLng, minPrice, maxPrice, houseTypes, minRoom, maxRoom, minGuest, maxGuest, checkInOutTimes, houseFeatures, photos) {
+const getIntWithLeadingZeros = (number) => number < 10 ? `0${number}` : number;
+
+const generateAnnouncements = function (count, minLat, maxLat, minLng, maxLng, locationAccuracy, minPrice, maxPrice, houseTypes, minRoom, maxRoom, minGuest, maxGuest, checkInOutTimes, houseFeatures, photos) {
   const announcements = [];
   for (let ind = 0; ind < count; ind++) {
-    const lat = getRandomDecimalPlace(minLat, maxLat, 5);
-    const lng = getRandomDecimalPlace(minLng, maxLng, 5);
+    const location = {
+      lat : getRandomDecimalPlace(minLat, maxLat, locationAccuracy),
+      lng : getRandomDecimalPlace(minLng, maxLng, locationAccuracy),
+    };
     announcements.push({
       author : {
-        avatar : `img/avatars/user${  (ind < 9 ? `0${  ind + 1}` : ind + 1)  }.png`,
+        avatar : `img/avatars/user${  getIntWithLeadingZeros(ind + 1)  }.png`,
       },
       offer : {
         title : `Объявление об аренде №${ind + 1}`,
-        address : `${lat}, ${lng}`,
+        address : `${location.lat}, ${location.lng}`,
         price : getRandomInt(minPrice, maxPrice),
         type : getRandomElement(houseTypes),
         rooms : getRandomInt(minRoom, maxRoom),
@@ -81,16 +85,13 @@ const generateAnnouncements = function (count, minLat, maxLat, minLng, maxLng, m
         description : 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
         photos : getRandomElements(photos, getRandomInt(0, photos.length)),
       },
-      location : {
-        lat : lat,
-        lng : lng,
-      },
+      location,
     });
   }
   return announcements;
 };
 
-const fakeAnnouncements = generateAnnouncements(SIMILAR_ANNOUNCEMENT_COUNT, MIN_LAT, MAX_LAT, MIN_LNG, MAX_LNG, MIN_PRICE, MAX_PRICE, TYPES_OF_HOUSE, MIN_COUNT_ROOM, MAX_COUNT_ROOM, MIN_COUNT_GUEST, MAX_COUNT_GUEST, CHECK_IN_OUT_TIMES, FEATURES_OF_HOUSE, PHOTOS);
+const fakeAnnouncements = generateAnnouncements(SIMILAR_ANNOUNCEMENT_COUNT, MIN_LAT, MAX_LAT, MIN_LNG, MAX_LNG, LOCATION_ACCURACY, MIN_PRICE, MAX_PRICE, TYPES_OF_HOUSE, MIN_COUNT_ROOM, MAX_COUNT_ROOM, MIN_COUNT_GUEST, MAX_COUNT_GUEST, CHECK_IN_OUT_TIMES, FEATURES_OF_HOUSE, PHOTOS);
 
 //Код для прохождения линтера
 fakeAnnouncements.length;

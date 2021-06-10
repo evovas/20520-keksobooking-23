@@ -1,10 +1,14 @@
 const SIMILAR_ANNOUNCEMENT_COUNT = 10;
-const MINIMUM_GENERATE_PRICE = 10000;
-const MAXIMUM_GENERATE_PRICE = 100000;
-const MINIMUM_GENERATE_ROOMS = 1;
-const MAXIMUM_GENERATE_ROOMS = 10;
-const MINIMUM_GENERATE_GUEST = 1;
-const MAXIMUM_GENERATE_GUEST = 10;
+const MIN_PRICE = 10000;
+const MAX_PRICE = 100000;
+const MIN_COUNT_ROOM = 1;
+const MAX_COUNT_ROOM = 10;
+const MIN_COUNT_GUEST = 1;
+const MAX_COUNT_GUEST = 10;
+const MIN_LAT = 35.65;
+const MAX_LAT = 35.7;
+const MIN_LNG = 139.7;
+const MAX_LNG = 139.8;
 
 const TYPES_OF_HOUSE = [
   'palace',
@@ -23,7 +27,7 @@ const FEATURES_OF_HOUSE = [
   'conditioner',
 ];
 
-const CHECK_IN_OUT_TIME = [
+const CHECK_IN_OUT_TIMES = [
   '12:00',
   '13:00',
   '14:00',
@@ -55,38 +59,38 @@ const getRandomElements = function (array = [], count = 0) {
   return Array.from(randomElements);
 };
 
-
-const generateAnnouncement = function (index) {
-  const lat = getRandomDecimalPlace(35.65, 35.7, 5);
-  const lng = getRandomDecimalPlace(139.7, 139.8, 5);
-  return  {
-    author : {
-      avatar : `img/avatars/user${  (index < 9 ? `0${  index + 1}` : index + 1)  }.png`,
-    },
-    offer : {
-      title : `Объявление об аренде №${index + 1}`,
-      address : `${lat}, ${lng}`,
-      price : getRandomInt(MINIMUM_GENERATE_PRICE, MAXIMUM_GENERATE_PRICE),
-      type : getRandomElement(TYPES_OF_HOUSE),
-      rooms : getRandomInt(MINIMUM_GENERATE_ROOMS, MAXIMUM_GENERATE_ROOMS),
-      guests : getRandomInt(MINIMUM_GENERATE_GUEST, MAXIMUM_GENERATE_GUEST),
-      checkin : getRandomElement(CHECK_IN_OUT_TIME),
-      checkout : getRandomElement(CHECK_IN_OUT_TIME),
-      features : getRandomElements(FEATURES_OF_HOUSE, getRandomInt(0, FEATURES_OF_HOUSE.length)),
-      description : 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-      photos : getRandomElements(PHOTOS, getRandomInt(0, PHOTOS.length)),
-    },
-    location : {
-      lat : lat,
-      lng : lng,
-    },
-  };
+const generateAnnouncements = function (count, minLat, maxLat, minLng, maxLng, minPrice, maxPrice, houseTypes, minRoom, maxRoom, minGuest, maxGuest, checkInOutTimes, houseFeatures, photos) {
+  const announcements = [];
+  for (let ind = 0; ind < count; ind++) {
+    const lat = getRandomDecimalPlace(minLat, maxLat, 5);
+    const lng = getRandomDecimalPlace(minLng, maxLng, 5);
+    announcements.push({
+      author : {
+        avatar : `img/avatars/user${  (ind < 9 ? `0${  ind + 1}` : ind + 1)  }.png`,
+      },
+      offer : {
+        title : `Объявление об аренде №${ind + 1}`,
+        address : `${lat}, ${lng}`,
+        price : getRandomInt(minPrice, maxPrice),
+        type : getRandomElement(houseTypes),
+        rooms : getRandomInt(minRoom, maxRoom),
+        guests : getRandomInt(minGuest, maxGuest),
+        checkin : getRandomElement(checkInOutTimes),
+        checkout : getRandomElement(checkInOutTimes),
+        features : getRandomElements(houseFeatures, getRandomInt(0, houseFeatures.length)),
+        description : 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+        photos : getRandomElements(photos, getRandomInt(0, photos.length)),
+      },
+      location : {
+        lat : lat,
+        lng : lng,
+      },
+    });
+  }
+  return announcements;
 };
 
-const announcements = [];
-for (let ind = 0; ind < SIMILAR_ANNOUNCEMENT_COUNT; ind++) {
-  announcements.push(generateAnnouncement(ind));
-}
+const fakeAnnouncements = generateAnnouncements(SIMILAR_ANNOUNCEMENT_COUNT, MIN_LAT, MAX_LAT, MIN_LNG, MAX_LNG, MIN_PRICE, MAX_PRICE, TYPES_OF_HOUSE, MIN_COUNT_ROOM, MAX_COUNT_ROOM, MIN_COUNT_GUEST, MAX_COUNT_GUEST, CHECK_IN_OUT_TIMES, FEATURES_OF_HOUSE, PHOTOS);
 
-//Код для прохождения проверки линтером
-announcements.slice();
+//Код для прохождения линтера
+fakeAnnouncements.length;

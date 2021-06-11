@@ -49,7 +49,7 @@ const getRandomDecimalPlace = (min = 0, max = 0, decimalPlaceNumber = 0) => getR
 
 const getRandomElement = (array) => array[getRandomInt(0, array.length - 1)];
 
-const getRandomElements = function (array = [], count = 0) {
+const getRandomElements = (array = [], count = 0) => {
   const randomElements = new Set();
   if (count && array.length !== 0) {
     for (let ind = 0; ind < count; ind++) {
@@ -61,12 +61,12 @@ const getRandomElements = function (array = [], count = 0) {
 
 const getIntWithLeadingZeros = (number) => number < 10 ? `0${number}` : number;
 
-const generateAnnouncements = function (count, minLat, maxLat, minLng, maxLng, locationAccuracy, minPrice, maxPrice, houseTypes, minRoom, maxRoom, minGuest, maxGuest, checkInOutTimes, houseFeatures, photos) {
+const generateAnnouncements = (count) => {
   const announcements = [];
   for (let ind = 0; ind < count; ind++) {
     const location = {
-      lat : getRandomDecimalPlace(minLat, maxLat, locationAccuracy),
-      lng : getRandomDecimalPlace(minLng, maxLng, locationAccuracy),
+      lat : getRandomDecimalPlace(MIN_LAT, MAX_LAT, LOCATION_ACCURACY),
+      lng : getRandomDecimalPlace(MIN_LNG, MAX_LNG, LOCATION_ACCURACY),
     };
     announcements.push({
       author : {
@@ -75,15 +75,15 @@ const generateAnnouncements = function (count, minLat, maxLat, minLng, maxLng, l
       offer : {
         title : `Объявление об аренде №${ind + 1}`,
         address : `${location.lat}, ${location.lng}`,
-        price : getRandomInt(minPrice, maxPrice),
-        type : getRandomElement(houseTypes),
-        rooms : getRandomInt(minRoom, maxRoom),
-        guests : getRandomInt(minGuest, maxGuest),
-        checkin : getRandomElement(checkInOutTimes),
-        checkout : getRandomElement(checkInOutTimes),
-        features : getRandomElements(houseFeatures, getRandomInt(0, houseFeatures.length)),
+        price : getRandomInt(MIN_PRICE, MAX_PRICE),
+        type : getRandomElement(TYPES_OF_HOUSE),
+        rooms : getRandomInt(MIN_COUNT_ROOM, MAX_COUNT_ROOM),
+        guests : getRandomInt(MIN_COUNT_GUEST, MAX_COUNT_GUEST),
+        checkin : getRandomElement(CHECK_IN_OUT_TIMES),
+        checkout : getRandomElement(CHECK_IN_OUT_TIMES),
+        features : getRandomElements(FEATURES_OF_HOUSE, getRandomInt(0, FEATURES_OF_HOUSE.length)),
         description : 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-        photos : getRandomElements(photos, getRandomInt(0, photos.length)),
+        photos : getRandomElements(PHOTOS, getRandomInt(0, PHOTOS.length)),
       },
       location,
     });
@@ -91,7 +91,7 @@ const generateAnnouncements = function (count, minLat, maxLat, minLng, maxLng, l
   return announcements;
 };
 
-const fakeAnnouncements = generateAnnouncements(SIMILAR_ANNOUNCEMENT_COUNT, MIN_LAT, MAX_LAT, MIN_LNG, MAX_LNG, LOCATION_ACCURACY, MIN_PRICE, MAX_PRICE, TYPES_OF_HOUSE, MIN_COUNT_ROOM, MAX_COUNT_ROOM, MIN_COUNT_GUEST, MAX_COUNT_GUEST, CHECK_IN_OUT_TIMES, FEATURES_OF_HOUSE, PHOTOS);
+const fakeAnnouncements = generateAnnouncements(SIMILAR_ANNOUNCEMENT_COUNT);
 
 //Код для прохождения линтера
 fakeAnnouncements.length;

@@ -63,7 +63,7 @@ const generateAnnouncements = (count) => {
         checkin : getRandomElement(CHECK_IN_OUT_TIMES),
         checkout : getRandomElement(CHECK_IN_OUT_TIMES),
         features : getRandomElements(FEATURES_OF_HOUSE, getRandomInt(0, FEATURES_OF_HOUSE.length)),
-        description : 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+        description : (getRandomInt(0, 1) === 1) ? 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.' : '',
         photos : getRandomElements(PHOTOS, getRandomInt(0, PHOTOS.length)),
       },
       location,

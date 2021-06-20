@@ -1,5 +1,6 @@
 import {getRandomInt, getRandomDecimalPlace, getRandomElement, getRandomElements, getIntWithLeadingZeros} from './util.js';
 
+const SIMILAR_ANNOUNCEMENT_COUNT = 10;
 const MIN_PRICE = 10000;
 const MAX_PRICE = 100000;
 const MIN_COUNT_ROOM = 1;
@@ -63,7 +64,7 @@ const generateAnnouncements = (count) => {
         checkin : getRandomElement(CHECK_IN_OUT_TIMES),
         checkout : getRandomElement(CHECK_IN_OUT_TIMES),
         features : getRandomElements(FEATURES_OF_HOUSE, getRandomInt(0, FEATURES_OF_HOUSE.length)),
-        description : (getRandomInt(0, 1) === 1) ? 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.' : '',
+        description : 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
         photos : getRandomElements(PHOTOS, getRandomInt(0, PHOTOS.length)),
       },
       location,
@@ -72,4 +73,6 @@ const generateAnnouncements = (count) => {
   return announcements;
 };
 
-export {generateAnnouncements};
+const announcementsData = generateAnnouncements(SIMILAR_ANNOUNCEMENT_COUNT);
+
+export {announcementsData};

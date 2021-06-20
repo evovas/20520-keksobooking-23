@@ -18,4 +18,10 @@ const getRandomElements = (array = [], count = 0) => {
 
 const getIntWithLeadingZeros = (number) => number < 10 ? `0${number}` : number;
 
-export {getRandomInt, getRandomDecimalPlace, getRandomElement, getRandomElements, getIntWithLeadingZeros};
+const createElementWithClasses = (tag, ...classNames) => {
+  const element = document.createElement(tag);
+  classNames.forEach((className) => element.classList.add(className));
+  return element;
+};
+
+export {getRandomInt, getRandomDecimalPlace, getRandomElement, getRandomElements, getIntWithLeadingZeros, createElementWithClasses};

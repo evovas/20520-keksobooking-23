@@ -1,8 +1,5 @@
-import {generateAnnouncements} from './data.js';
+import {announcementsData} from './data.js';
+import {createAnnouncementCard} from './create-announcement-card.js';
 
-const SIMILAR_ANNOUNCEMENT_COUNT = 10;
-
-const fakeAnnouncements = generateAnnouncements(SIMILAR_ANNOUNCEMENT_COUNT);
-
-//Код для прохождения линтера
-fakeAnnouncements.length;
+//Проверка работы
+document.querySelector('#map-canvas').appendChild(createAnnouncementCard(announcementsData[7]));

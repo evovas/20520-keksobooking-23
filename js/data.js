@@ -1,5 +1,6 @@
 import {getRandomInt, getRandomDecimalPlace, getRandomElement, getRandomElements, getIntWithLeadingZeros} from './util.js';
 
+const SIMILAR_ANNOUNCEMENT_COUNT = 10;
 const MIN_PRICE = 10000;
 const MAX_PRICE = 100000;
 const MIN_COUNT_ROOM = 1;
@@ -72,4 +73,6 @@ const generateAnnouncements = (count) => {
   return announcements;
 };
 
-export {generateAnnouncements};
+const announcementsData = generateAnnouncements(SIMILAR_ANNOUNCEMENT_COUNT);
+
+export {announcementsData};

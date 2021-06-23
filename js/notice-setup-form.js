@@ -42,7 +42,7 @@ inputPrice.addEventListener('input', () => {
 const checkCapacity = () => {
   const capacityWorkFragment = capacityDocumentFragment.cloneNode(true);
   const capacityOptions = capacityWorkFragment.querySelectorAll('option');
-  capacityOptions[0].selected = false;
+  const previousCapacityValue = inputCapacity.value;
 
   if (parseInt(inputRooms.value, 10) !== 100) {
     capacityOptions.forEach((option) => {
@@ -58,12 +58,18 @@ const checkCapacity = () => {
     });
   }
 
-  capacityOptions[0].selected = true;
-
   inputCapacity.innerHTML = '';
   inputCapacity.appendChild(capacityWorkFragment.cloneNode(true));
+
+  const newCapacityValue = inputCapacity.value;
+
+  if (newCapacityValue !== previousCapacityValue) {
+    inputCapacity.setCustomValidity('Внимание, значение изменилось, выберите новое значение');
+    inputCapacity.reportValidity();
+  }
 };
 
 checkCapacity();
 
 inputRooms.addEventListener('input', checkCapacity);
+inputCapacity.addEventListener('click', () => inputCapacity.setCustomValidity(''));

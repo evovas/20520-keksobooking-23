@@ -1,6 +1,8 @@
 const MIN_TITLE_LENGTH = 30;
 const MAX_TITLE_LENGTH = 100;
 const MAX_PRICE_VALUE = 1000000;
+const NOT_FOR_GUESTS_ROOMS = 100;
+const NOT_FOR_GUESTS_CAPACITY = 0;
 
 const notice = document.querySelector('.notice');
 const form = notice.querySelector('.ad-form');
@@ -9,12 +11,8 @@ const inputPrice = form.querySelector('input[name="price"]');
 const inputRooms = form.querySelector('select[name="rooms"]');
 const inputCapacity = form.querySelector('select[name="capacity"]');
 
-const capacityTemplate = inputCapacity.cloneNode(true);
-const capacityDocumentFragment = document.createDocumentFragment();
-capacityTemplate.querySelectorAll('option').forEach((option) => capacityDocumentFragment.appendChild(option));
-
-inputTitle.addEventListener('input', () => {
-  const valueLength = inputTitle.value.length;
+const onInputTitle = (evt) => {
+  const valueLength = evt.currentTarget.value.length;
 
   if (valueLength < MIN_TITLE_LENGTH) {
     inputTitle.setCustomValidity(`До мин. длины не хватает ${MIN_TITLE_LENGTH - valueLength} символов`);
@@ -25,10 +23,10 @@ inputTitle.addEventListener('input', () => {
   }
 
   inputTitle.reportValidity();
-});
+};
 
-inputPrice.addEventListener('input', () => {
-  const value = inputPrice.value;
+const onInputPrice = (evt) => {
+  const value = evt.currentTarget.value;
 
   if (value > MAX_PRICE_VALUE) {
     inputPrice.setCustomValidity(`Максимальная цена за ночь ${MAX_PRICE_VALUE}`);
@@ -37,39 +35,28 @@ inputPrice.addEventListener('input', () => {
   }
 
   inputPrice.reportValidity();
-});
-
-const checkCapacity = () => {
-  const capacityWorkFragment = capacityDocumentFragment.cloneNode(true);
-  const capacityOptions = capacityWorkFragment.querySelectorAll('option');
-  const previousCapacityValue = inputCapacity.value;
-
-  if (parseInt(inputRooms.value, 10) !== 100) {
-    capacityOptions.forEach((option) => {
-      if (parseInt(option.value, 10) > inputRooms.value || parseInt(option.value, 10) === 0) {
-        option.remove();
-      }
-    });
-  } else {
-    capacityOptions.forEach((option) => {
-      if (parseInt(option.value, 10) !== 0) {
-        option.remove();
-      }
-    });
-  }
-
-  inputCapacity.innerHTML = '';
-  inputCapacity.appendChild(capacityWorkFragment.cloneNode(true));
-
-  const newCapacityValue = inputCapacity.value;
-
-  if (newCapacityValue !== previousCapacityValue) {
-    inputCapacity.setCustomValidity('Внимание, значение изменилось, выберите новое значение');
-    inputCapacity.reportValidity();
-  }
 };
 
-checkCapacity();
+const onCheckCapacity = () => {
+  const roomsValue = parseInt(inputRooms.value);
+  const capacityValue = parseInt(inputCapacity.value);
 
-inputRooms.addEventListener('input', checkCapacity);
-inputCapacity.addEventListener('click', () => inputCapacity.setCustomValidity(''));
+  if (capacityValue > roomsValue) {
+    inputCapacity.setCustomValidity('Количество гостей не может превышать количество комнат');
+  } else if (roomsValue === NOT_FOR_GUESTS_ROOMS && capacityValue !== NOT_FOR_GUESTS_CAPACITY) {
+    inputCapacity.setCustomValidity('При выборе 100 комнат, значение Количество мест может быть только "не для гостей"');
+  } else if (roomsValue !== NOT_FOR_GUESTS_ROOMS && capacityValue === NOT_FOR_GUESTS_CAPACITY) {
+    inputRooms.setCustomValidity('При выборе значения "не для гостей", Количество комнат может только 100');
+  } else {
+    inputCapacity.setCustomValidity('');
+    inputRooms.setCustomValidity('');
+  }
+
+  inputRooms.reportValidity();
+  inputCapacity.reportValidity();
+};
+
+inputTitle.addEventListener('input', onInputTitle);
+inputPrice.addEventListener('input', onInputPrice);
+inputRooms.addEventListener('input', onCheckCapacity);
+inputCapacity.addEventListener('input', onCheckCapacity);

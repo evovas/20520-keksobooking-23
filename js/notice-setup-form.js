@@ -38,8 +38,8 @@ const onInputPrice = (evt) => {
 };
 
 const onCheckCapacity = () => {
-  const roomsValue = parseInt(inputRooms.value);
-  const capacityValue = parseInt(inputCapacity.value);
+  const roomsValue = parseInt(inputRooms.value, 10);
+  const capacityValue = parseInt(inputCapacity.value, 10);
 
   if (capacityValue > roomsValue) {
     inputCapacity.setCustomValidity('Количество гостей не может превышать количество комнат');

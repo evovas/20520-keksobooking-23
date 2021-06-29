@@ -1,9 +1,6 @@
-import {enableActivePageState, enableInactivePageState} from './toggle-page-state.js';
-import {announcementsData} from './data.js';
-import './notice-setup-form.js';
-import {createAnnouncementCard} from './create-announcement-card.js';
+import './toggle-page-state.js';
+import './render-map.js';
+import './filter-announcements.js';
+import './create-new-announcement.js';
 
 //Проверка работы
-enableInactivePageState();
-enableActivePageState();
-document.querySelector('#map-canvas').appendChild(createAnnouncementCard(announcementsData[7]));

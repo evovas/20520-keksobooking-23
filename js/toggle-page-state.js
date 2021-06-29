@@ -21,4 +21,6 @@ const enableActivePageState = () => {
   mapFiltersForm.querySelector('fieldset').disabled = false;
 };
 
+enableInactivePageState();
+
 export {enableInactivePageState, enableActivePageState};

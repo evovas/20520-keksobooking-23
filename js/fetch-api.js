@@ -1,7 +1,8 @@
 import {enableInactiveFilterState, enableActiveFilterState} from './toggle-page-state.js';
+import {resetForm} from './create-new-announcement.js';
 
 const Url = {
-  SERVER: 'https://23.javascript.pages.academy/keksobooking',
+  SERVER: 'https://23.javascript.pages.academy/5keksobooking',
   DATA: 'https://23.javascript.pages.academy/keksobooking/data',
 };
 
@@ -25,7 +26,7 @@ const getAnnouncementsData = (onSuccess, onFail) => {
     });
 };
 
-const sendData = (data, onSuccess, onFail) => {
+const sendNoticeData = (data, onSuccess, onFail) => {
   fetch(Url.SERVER, {
     method: 'POST',
     body: data,
@@ -37,8 +38,10 @@ const sendData = (data, onSuccess, onFail) => {
         throw new Error(`${response.status}: ${response.statusText}`);
       }
     })
-    .then(() => onSuccess())
-    .catch(() => onFail());
+    .then(resetForm)
+    .then(() => onSuccess('Ваше объявление успешно размещено!'))
+    .catch((err) => onFail(`Ошибка размещения объявления:
+    ${err.message}`));
 };
 
-export {getAnnouncementsData, sendData};
+export {getAnnouncementsData, sendNoticeData};

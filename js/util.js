@@ -24,4 +24,6 @@ const createElementWithClasses = (tag, ...classNames) => {
   return element;
 };
 
-export {getRandomInt, getRandomDecimalPlace, getRandomElement, getRandomElements, getIntWithLeadingZeros, createElementWithClasses};
+const isEscEvent = (evt) => evt.key === 'Esc' || evt.key === 'Escape';
+
+export {getRandomInt, getRandomDecimalPlace, getRandomElement, getRandomElements, getIntWithLeadingZeros, createElementWithClasses, isEscEvent};

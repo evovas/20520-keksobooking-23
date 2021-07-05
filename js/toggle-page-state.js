@@ -29,6 +29,4 @@ const enableActivePageState = () => {
   enableActiveFilterState();
 };
 
-enableInactivePageState();
-
 export {enableInactivePageState, enableActivePageState, enableInactiveFilterState, enableActiveFilterState};

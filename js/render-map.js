@@ -20,16 +20,18 @@ const markerIcon = L.icon({
   iconAnchor: [20, 40],
 });
 
-const map = L.map('map-canvas')
-  .on('load', enableActivePageState)
-  .setView(DefaultCoordinates, DEFAULT_MAP_ZOOM);
+let map;
 
-L.tileLayer(
-  'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-  {
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-  },
-).addTo(map);
+const renderMap = () => {
+  map = L.map('map-canvas').on('load', enableActivePageState).setView(DefaultCoordinates, DEFAULT_MAP_ZOOM);
+  L.tileLayer(
+    'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+    {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+    },
+  )
+    .addTo(map);
+};
 
 const createMainMarker = () => L.marker(DefaultCoordinates, {draggable: true, icon: mainMarkerIcon}).addTo(map);
 
@@ -50,4 +52,4 @@ const createMarkerGroup = (announcements) => {
   return markerGroup;
 };
 
-export {createMainMarker, resetMainMarker, createMarker, createMarkerGroup};
+export {renderMap, createMainMarker, resetMainMarker, createMarker, createMarkerGroup};

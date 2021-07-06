@@ -2,7 +2,7 @@ import {enableInactiveFilterState, enableActiveFilterState} from './toggle-page-
 import {resetForm} from './create-new-announcement.js';
 
 const Url = {
-  SERVER: 'https://23.javascript.pages.academy/5keksobooking',
+  SERVER: 'https://23.javascript.pages.academy/keksobooking',
   DATA: 'https://23.javascript.pages.academy/keksobooking/data',
 };
 

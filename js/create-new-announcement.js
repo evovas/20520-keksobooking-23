@@ -17,32 +17,6 @@ const onMoveEndMainMarker = (evt) => {
   inputAddress.value = `${parseFloat(coordinates.lat).toFixed(DEFAULT_COORDINATE_ROUNDING)}, ${parseFloat(coordinates.lng).toFixed(DEFAULT_COORDINATE_ROUNDING)}`;
 };
 
-// const showMessage = (template) => {
-//   const currentMessage = template.content.querySelector('div').cloneNode(true);
-//
-//   const onEscKeydownMessage = (evt) => {
-//     if (isEscEvent(evt)) {
-//       currentMessage.remove();
-//     }
-//   };
-//   const onClickMessage = () => {
-//     currentMessage.remove();
-//   };
-//
-//   document.addEventListener('keydown', onEscKeydownMessage, {once: true});
-//   currentMessage.addEventListener('click', onClickMessage);
-//
-//   document.body.appendChild(currentMessage);
-// };
-
-// const openSuccessMessage = () => {
-//   showMessage(successTemplate);
-// };
-//
-// const openErrorMessage = () => {
-//   showMessage(errorTemplate);
-// };
-
 const resetForm = () => {
   form.reset();
   resetMainMarker(mainMarker);

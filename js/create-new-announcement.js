@@ -1,5 +1,7 @@
 import './notice-setup-form.js';
+import {showSuccessMessage, showErrorMessage} from './util.js';
 import {createMainMarker, resetMainMarker} from './render-map.js';
+import {sendNoticeData} from './fetch-api.js';
 
 const DEFAULT_COORDINATE_ROUNDING = 5;
 
@@ -15,11 +17,28 @@ const onMoveEndMainMarker = (evt) => {
   inputAddress.value = `${parseFloat(coordinates.lat).toFixed(DEFAULT_COORDINATE_ROUNDING)}, ${parseFloat(coordinates.lng).toFixed(DEFAULT_COORDINATE_ROUNDING)}`;
 };
 
-const onResetForm = () => {
+const resetForm = () => {
+  form.reset();
   resetMainMarker(mainMarker);
 };
+
+const onResetForm = () => {
+  resetForm();
+};
+
+const onSubmitForm = (evt) => {
+  evt.preventDefault();
+
+  const formData = new FormData(evt.target);
+
+  sendNoticeData(formData, showSuccessMessage, showErrorMessage);
+};
+
+form.addEventListener('submit', onSubmitForm);
 
 mainMarker.on('moveend', onMoveEndMainMarker);
 buttonReset.addEventListener('click', onResetForm);
 
 //Здесь предполагается реализация пункта 6 ТЗ
+
+export {resetForm};

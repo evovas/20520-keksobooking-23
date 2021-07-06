@@ -1007,6 +1007,23 @@ fieldset {
   opacity: 0.6;
 }
 
+/**
+ * Сообщения об ошибке получения данных с сервера
+ */
+
+.get-error {
+  z-index: 100;
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  padding: 10px 3px;
+  font-size: 30px;
+  text-align: center;
+  background-color: red;
+  color: white;
+}
+
 .visually-hidden {
   position: absolute;
 

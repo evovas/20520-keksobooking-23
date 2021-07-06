@@ -87,7 +87,7 @@ const createAnnouncementCard = ({author, offer}) => {
   }
 
   const cardFeatures = card.querySelector('.popup__features');
-  if (offer.features.length) {
+  if (offer.features && offer.features.length) {
     cardFeatures.innerHTML = '';
     cardFeatures.appendChild(createFeatures(offer.features));
   } else {
@@ -95,7 +95,7 @@ const createAnnouncementCard = ({author, offer}) => {
   }
 
   const cardPhotos = card.querySelector('.popup__photos');
-  if (offer.photos.length) {
+  if (offer.photos && offer.photos.length) {
     const photoTemplate = card.querySelector('.popup__photo').cloneNode(false);
     cardPhotos.innerHTML = '';
     cardPhotos.appendChild(createPhotos(photoTemplate, offer.photos, offer.title));

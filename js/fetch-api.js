@@ -40,7 +40,7 @@ const sendNoticeData = (data, onSuccess, onFail) => {
     })
     .then(resetForm)
     .then(() => onSuccess('Ваше объявление успешно размещено!'))
-    .catch((err) => onFail(`Ошибка размещения объявления:
+    .catch((err) => onFail(`Ошибка размещения объявления.
     ${err.message}`));
 };
 

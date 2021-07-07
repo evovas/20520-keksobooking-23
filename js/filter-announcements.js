@@ -91,7 +91,7 @@ const isSelectedFeatures = (announcement) => {
 const filterAnnouncements = (announcement) => isSelectedHouseType(announcement) && isSelectedPriceRange(announcement) && isSelectedRooms(announcement) && isSelectedGuests(announcement) && isSelectedFeatures(announcement);
 
 const setFilter = (cb) => {
-  filter.addEventListener('change', () => {
+  filter.addEventListener('input', () => {
     cb();
   });
 };

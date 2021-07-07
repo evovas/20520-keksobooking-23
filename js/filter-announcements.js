@@ -84,7 +84,7 @@ const isSelectedFeatures = (announcement) => {
   } else if (!(features && features.length)) {
     return false;
   } else {
-    return selectedFeatures.length === [...new Set([...features, ...selectedFeatures])].length;
+    return selectedFeatures.length === selectedFeatures.filter((feature) => features.includes(feature)).length;
   }
 };
 
@@ -101,4 +101,23 @@ const applyFilters = (announcements) => {
   setFilter(debounce(() => createMarkerGroup(announcements), RERENDER_DELAY));
 };
 
-export {filterAnnouncements, applyFilters, showAlert};
+const sortAnnouncements = (announcementA, announcementB) => {
+  let featuresA;
+  let featuresB;
+
+  if (announcementA.offer.features) {
+    featuresA = announcementA.offer.features.length;
+  } else {
+    featuresA = 0;
+  }
+
+  if (announcementB.offer.features) {
+    featuresB = announcementB.offer.features.length;
+  } else {
+    featuresB = 0;
+  }
+
+  return featuresB - featuresA;
+};
+
+export {filterAnnouncements, sortAnnouncements, applyFilters, showAlert};

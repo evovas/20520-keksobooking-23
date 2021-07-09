@@ -1,9 +1,8 @@
 import {enableActivePageState} from './toggle-page-state.js';
 import {createAnnouncementCard} from './create-announcement-card.js';
-import {filterAnnouncements, sortAnnouncements} from './filter-announcements.js';
+import {filterAnnouncements} from './filter-announcements.js';
 
 const DEFAULT_MAP_ZOOM = 13;
-const MAX_COUNT_ANNOUNCEMENTS = 10;
 
 const DefaultCoordinates = {
   lat: 35.68152,
@@ -53,11 +52,8 @@ const createMarker = (announcement, targetObject = map) => {
 
 const createMarkerGroup = (announcements) => {
   markerGroup.clearLayers();
-  announcements
-    .slice()
-    .filter((announcement) => filterAnnouncements(announcement))
-    .sort(sortAnnouncements)
-    .splice(0, MAX_COUNT_ANNOUNCEMENTS).forEach((announcement) => markerGroup.addLayer(createMarker(announcement, markerGroup)));
+  filterAnnouncements(announcements)
+    .forEach((announcement) => markerGroup.addLayer(createMarker(announcement, markerGroup)));
   markerGroup.addTo(map);
   return markerGroup;
 };

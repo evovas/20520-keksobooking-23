@@ -60,9 +60,9 @@ const isSelectedFeature = (announcement, checkbox) => {
 };
 
 const filterAnnouncements = (announcements) => {
-  const items =[];
+  const result =[];
   for (let ind = 0; ind < announcements.length; ind++) {
-    if (items.length === MAX_COUNT_ANNOUNCEMENTS) {
+    if (result.length === MAX_COUNT_ANNOUNCEMENTS) {
       break;
     }
     if (isSelectedHouseType(announcements[ind])
@@ -75,21 +75,18 @@ const filterAnnouncements = (announcements) => {
       && isSelectedFeature(announcements[ind], checkboxWasher)
       && isSelectedFeature(announcements[ind], checkboxElevator)
       && isSelectedFeature(announcements[ind], checkboxConditioner)) {
-      items.push(announcements[ind]);
+      result.push(announcements[ind]);
     }
   }
-  return items;
+  return result;
 };
 
-const setFilter = (cb) => {
-  filter.addEventListener('input', () => {
-    cb();
-  });
-};
-
-const applyFilters = (announcements) => {
+const applyFilters = function (announcements) {
   createMarkerGroup(announcements);
-  setFilter(debounce(() => createMarkerGroup(announcements), RERENDER_DELAY));
+  const createMarkerGroupDebounced = debounce(() => createMarkerGroup(announcements), RERENDER_DELAY);
+  filter.addEventListener('input', () => {
+    createMarkerGroupDebounced();
+  });
 };
 
 export {filterAnnouncements, applyFilters, showAlert};

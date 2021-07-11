@@ -83,10 +83,8 @@ const filterAnnouncements = (announcements) => {
 
 const applyFilters = function (announcements) {
   createMarkerGroup(announcements);
-  const createMarkerGroupDebounced = debounce(() => createMarkerGroup(announcements), RERENDER_DELAY);
-  filter.addEventListener('input', () => {
-    createMarkerGroupDebounced();
-  });
+  const onCreateMarkerGroupDebounced = debounce(() => createMarkerGroup(announcements), RERENDER_DELAY);
+  filter.addEventListener('input', onCreateMarkerGroupDebounced);
 };
 
 export {filterAnnouncements, applyFilters, showAlert};

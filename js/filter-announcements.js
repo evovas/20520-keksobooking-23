@@ -53,7 +53,11 @@ const isSelectedGuests = (announcement) => selectGuests.value !== FILTER_DEFAULT
 
 const isSelectedFeature = (announcement, checkbox) => {
   const hasFeatures = announcement.offer.features && announcement.offer.features.length;
-  return checkbox.checked && hasFeatures ? announcement.offer.features.includes(checkbox.value) : true;
+  if (checkbox.checked) {
+    return hasFeatures ? announcement.offer.features.includes(checkbox.value) : false;
+  } else {
+    return true;
+  }
 };
 
 const filterAnnouncements = (announcements) => {

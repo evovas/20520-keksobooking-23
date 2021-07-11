@@ -52,11 +52,8 @@ const isSelectedRooms = (announcement) => selectRooms.value !== FILTER_DEFAULT_V
 const isSelectedGuests = (announcement) => selectGuests.value !== FILTER_DEFAULT_VALUE ? (parseInt(selectGuests.value, 10) === announcement.offer.guests) : true;
 
 const isSelectedFeature = (announcement, checkbox) => {
-  if (checkbox.checked) {
-    return announcement.offer.features ? announcement.offer.features.includes(checkbox.value) : false;
-  } else {
-    return true;
-  }
+  const hasFeatures = announcement.offer.features && announcement.offer.features.length;
+  return checkbox.checked && hasFeatures ? announcement.offer.features.includes(checkbox.value) : true;
 };
 
 const filterAnnouncements = (announcements) => {

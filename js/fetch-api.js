@@ -1,5 +1,5 @@
 import {enableInactiveFilterState, enableActiveFilterState} from './toggle-page-state.js';
-import {resetForm} from './create-new-announcement.js';
+import {resetPage} from './create-new-announcement.js';
 
 const Url = {
   SERVER: 'https://23.javascript.pages.academy/keksobooking',
@@ -38,7 +38,7 @@ const sendNoticeData = (data, onSuccess, onFail) => {
         throw new Error(`${response.status}: ${response.statusText}`);
       }
     })
-    .then(resetForm)
+    .then(resetPage)
     .then(() => onSuccess('Ваше объявление успешно размещено!'))
     .catch((err) => onFail(`Ошибка размещения объявления.
     ${err.message}`));

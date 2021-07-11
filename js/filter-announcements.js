@@ -84,7 +84,12 @@ const filterAnnouncements = (announcements) => {
 const applyFilters = function (announcements) {
   createMarkerGroup(announcements);
   const onCreateMarkerGroupDebounced = debounce(() => createMarkerGroup(announcements), RERENDER_DELAY);
-  filter.addEventListener('input', onCreateMarkerGroupDebounced);
+  filter.addEventListener('change', onCreateMarkerGroupDebounced);
+  filter.addEventListener('reset', onCreateMarkerGroupDebounced);
 };
 
-export {filterAnnouncements, applyFilters, showAlert};
+const resetFilters = () => {
+  filter.reset();
+};
+
+export {filterAnnouncements, applyFilters, showAlert, resetFilters};

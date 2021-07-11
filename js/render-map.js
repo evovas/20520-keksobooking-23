@@ -1,5 +1,6 @@
 import {enableActivePageState} from './toggle-page-state.js';
 import {createAnnouncementCard} from './create-announcement-card.js';
+import {filterAnnouncements} from './filter-announcements.js';
 
 const DEFAULT_MAP_ZOOM = 13;
 
@@ -19,6 +20,9 @@ const markerIcon = L.icon({
   iconSize: [40, 40],
   iconAnchor: [20, 40],
 });
+
+
+const markerGroup = L.layerGroup();
 
 let map;
 
@@ -47,8 +51,10 @@ const createMarker = (announcement, targetObject = map) => {
 };
 
 const createMarkerGroup = (announcements) => {
-  const markerGroup = L.layerGroup().addTo(map);
-  announcements.forEach((announcement) => createMarker(announcement, markerGroup));
+  markerGroup.clearLayers();
+  filterAnnouncements(announcements)
+    .forEach((announcement) => markerGroup.addLayer(createMarker(announcement, markerGroup)));
+  markerGroup.addTo(map);
   return markerGroup;
 };
 

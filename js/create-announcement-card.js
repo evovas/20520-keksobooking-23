@@ -10,7 +10,7 @@ const TypesOfHouse = {
 
 const createFeatures = (features) => {
   const featuresFragment = document.createDocumentFragment();
-  features.forEach((feature) => featuresFragment.appendChild(createElementWithClasses('li', 'popup__feature', `popup__feature--${feature}`)));
+  features.forEach((feature) => featuresFragment.append(createElementWithClasses('li', 'popup__feature', `popup__feature--${feature}`)));
   return featuresFragment;
 };
 
@@ -20,7 +20,7 @@ const createPhotos = (template, photosSrc, offerTitle) => {
     const newPhoto = template.cloneNode(false);
     newPhoto.src = photoSrc;
     newPhoto.alt = `${newPhoto.alt} к объявлению ${offerTitle}`;
-    photosFragment.appendChild(newPhoto);
+    photosFragment.append(newPhoto);
   });
   return photosFragment;
 };
@@ -89,7 +89,7 @@ const createAnnouncementCard = ({author, offer}) => {
   const cardFeatures = card.querySelector('.popup__features');
   if (offer.features && offer.features.length) {
     cardFeatures.innerHTML = '';
-    cardFeatures.appendChild(createFeatures(offer.features));
+    cardFeatures.append(createFeatures(offer.features));
   } else {
     cardFeatures.remove();
   }
@@ -98,7 +98,7 @@ const createAnnouncementCard = ({author, offer}) => {
   if (offer.photos && offer.photos.length) {
     const photoTemplate = card.querySelector('.popup__photo').cloneNode(false);
     cardPhotos.innerHTML = '';
-    cardPhotos.appendChild(createPhotos(photoTemplate, offer.photos, offer.title));
+    cardPhotos.append(createPhotos(photoTemplate, offer.photos, offer.title));
   } else {
     cardPhotos.remove();
   }

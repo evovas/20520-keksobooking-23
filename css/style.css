@@ -295,6 +295,7 @@ fieldset {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+  flex-shrink: 0;
 
   margin-right: 10px;
   padding: 0 15px;
@@ -306,6 +307,7 @@ fieldset {
 
   border-radius: 5px;
   background-color: #dadada;
+  background-size: 70px;
 }
 
 .ad-form__field {
@@ -581,6 +583,7 @@ fieldset {
 
   background-color: #e4e4de;
   border-radius: 5px;
+  background-size: auto 70px;
 }
 
 .ad-form__element--submit {

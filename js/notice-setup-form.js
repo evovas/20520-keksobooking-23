@@ -12,8 +12,7 @@ const MinPricesForTypes = {
   PALACE : 10000,
 };
 
-const notice = document.querySelector('.notice');
-const form = notice.querySelector('.ad-form');
+const form = document.querySelector('.notice .ad-form');
 const inputTitle = form.querySelector('input[name="title"]');
 const inputPrice = form.querySelector('input[name="price"]');
 const inputRooms = form.querySelector('select[name="rooms"]');

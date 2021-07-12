@@ -44,4 +44,4 @@ buttonReset.addEventListener('click', onResetPage);
 
 //Здесь предполагается реализация пункта 6 ТЗ
 
-export {resetPage};
+export {resetPage, onSubmitForm};

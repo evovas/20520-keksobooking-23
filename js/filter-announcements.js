@@ -11,7 +11,12 @@ const selectHouseType = filter.querySelector('select[name="housing-type"]');
 const selectPrice = filter.querySelector('select[name="housing-price"]');
 const selectRooms = filter.querySelector('select[name="housing-rooms"]');
 const selectGuests = filter.querySelector('select[name="housing-guests"]');
-const featuresCheckboxes = filter.querySelectorAll('input[type="checkbox"]');
+const checkboxWifi = filter.querySelector('input[id="filter-wifi"]');
+const checkboxDishwasher = filter.querySelector('input[id="filter-dishwasher"]');
+const checkboxParking = filter.querySelector('input[id="filter-parking"]');
+const checkboxWasher = filter.querySelector('input[id="filter-washer"]');
+const checkboxElevator = filter.querySelector('input[id="filter-elevator"]');
+const checkboxConditioner = filter.querySelector('input[id="filter-conditioner"]');
 
 const PriceRanges = {
   MAX_LOW_RANGE: 10000,
@@ -46,24 +51,14 @@ const isSelectedRooms = (announcement) => selectRooms.value !== FILTER_DEFAULT_V
 
 const isSelectedGuests = (announcement) => selectGuests.value !== FILTER_DEFAULT_VALUE ? (parseInt(selectGuests.value, 10) === announcement.offer.guests) : true;
 
-const isSelectedFeatures = (announcement) => {
+const isSelectedFeature = (announcement, checkbox) => {
   const hasFeatures = announcement.offer.features && announcement.offer.features.length;
-  let result = true;
 
-  for (const checkbox of featuresCheckboxes) {
-
-    if (checkbox.checked) {
-      result = hasFeatures ? announcement.offer.features.includes(checkbox.value) : false;
-    } else {
-      result = true;
-    }
-
-    if (!result) {
-      return result;
-    }
+  if (checkbox.checked) {
+    return hasFeatures ? announcement.offer.features.includes(checkbox.value) : false;
+  } else {
+    return true;
   }
-
-  return result;
 };
 
 const filterAnnouncements = (announcements) => {
@@ -76,7 +71,12 @@ const filterAnnouncements = (announcements) => {
       && isSelectedPriceRange(announcements[ind])
       && isSelectedRooms(announcements[ind])
       && isSelectedGuests(announcements[ind])
-      && isSelectedFeatures(announcements[ind])) {
+      && isSelectedFeature(announcements[ind], checkboxWifi)
+      && isSelectedFeature(announcements[ind], checkboxDishwasher)
+      && isSelectedFeature(announcements[ind], checkboxParking)
+      && isSelectedFeature(announcements[ind], checkboxWasher)
+      && isSelectedFeature(announcements[ind], checkboxElevator)
+      && isSelectedFeature(announcements[ind], checkboxConditioner)) {
       result.push(announcements[ind]);
     }
   }

@@ -310,6 +310,10 @@ fieldset {
   background-size: 70px;
 }
 
+.ad-form-header__preview--replaced {
+  padding: 0;
+}
+
 .ad-form__field {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -396,10 +400,8 @@ fieldset {
           box-shadow: 0 0 2px 2px #ff6547;
 }
 
-.ad-form__element input.ad-form__field--invalid,
-.ad-form__element select.ad-form__field--invalid,
-.ad-form__element textarea.ad-form__field--invalid {
-  border: 1px solid red;
+.ad-form__element .ad-form__field--invalid {
+  outline: 1px solid red;
 }
 
 .ad-form__element--time {
@@ -548,10 +550,6 @@ fieldset {
 
 .ad-form__upload .ad-form__input {
   width: auto;
-}
-
-.ad-form__upload:last-of-type {
-  margin-right: 0;
 }
 
 .ad-form__drop-zone {

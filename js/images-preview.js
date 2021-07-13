@@ -6,8 +6,8 @@ const inputAvatar = form.querySelector('input[id="avatar"]');
 const photoPreview = form.querySelector('.ad-form__photo');
 const inputPhoto = form.querySelector('input[id="images"]');
 
-const createImagePreview = (file) => {
-  const result = document.createElement('div');
+const createImagePreview = (file, alt) => {
+  const result = document.createElement('img');
   const fileName = file.name.toLowerCase();
 
   const isAcceptable = FILE_TYPES.some((extension) => fileName.endsWith(extension));
@@ -16,7 +16,8 @@ const createImagePreview = (file) => {
     const reader = new FileReader();
 
     reader.addEventListener('load', () => {
-      result.style.backgroundImage = `url("${reader.result}")`;
+      result.src = reader.result;
+      result.alt = alt;
     });
 
     reader.readAsDataURL(file);
@@ -27,8 +28,8 @@ const createImagePreview = (file) => {
 
 const onChangeAvatar = () => {
   const file = inputAvatar.files[0];
-  const avatar = createImagePreview(file);
-  avatar.classList.add('ad-form-header__preview');
+  const avatar = createImagePreview(file, 'Предпросмотр выбранной аватарки');
+  avatar.classList.add('ad-form-header__preview', 'ad-form-header__preview--replaced');
   avatarPreview.replaceWith(avatar);
 };
 
@@ -36,7 +37,7 @@ const onChangePhotos = () => {
   const files = inputPhoto.files;
   const photos = document.createDocumentFragment();
   for (const file of files) {
-    const photo = createImagePreview(file);
+    const photo = createImagePreview(file,'Превью фото объявления');
     photo.classList.add('ad-form__photo');
     photos.append(photo);
   }

@@ -295,6 +295,7 @@ fieldset {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+  flex-shrink: 0;
 
   margin-right: 10px;
   padding: 0 15px;
@@ -306,6 +307,11 @@ fieldset {
 
   border-radius: 5px;
   background-color: #dadada;
+  background-size: 70px;
+}
+
+.ad-form-header__preview--replaced {
+  padding: 0;
 }
 
 .ad-form__field {
@@ -392,6 +398,10 @@ fieldset {
   outline: none;
   -webkit-box-shadow: 0 0 2px 2px #ff6547;
           box-shadow: 0 0 2px 2px #ff6547;
+}
+
+.ad-form__element .ad-form__field--invalid {
+  outline: 1px solid red;
 }
 
 .ad-form__element--time {
@@ -542,10 +552,6 @@ fieldset {
   width: auto;
 }
 
-.ad-form__upload:last-of-type {
-  margin-right: 0;
-}
-
 .ad-form__drop-zone {
   width: 100%;
   height: 70px;
@@ -581,6 +587,7 @@ fieldset {
 
   background-color: #e4e4de;
   border-radius: 5px;
+  background-size: auto 70px;
 }
 
 .ad-form__element--submit {

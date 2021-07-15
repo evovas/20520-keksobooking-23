@@ -1,3 +1,5 @@
+import {onSubmitForm} from './create-new-announcement.js';
+
 const MIN_TITLE_LENGTH = 30;
 const MAX_TITLE_LENGTH = 100;
 const MAX_PRICE_VALUE = 1000000;
@@ -12,8 +14,7 @@ const MinPricesForTypes = {
   PALACE : 10000,
 };
 
-const notice = document.querySelector('.notice');
-const form = notice.querySelector('.ad-form');
+const form = document.querySelector('.notice .ad-form');
 const inputTitle = form.querySelector('input[name="title"]');
 const inputPrice = form.querySelector('input[name="price"]');
 const inputRooms = form.querySelector('select[name="rooms"]');
@@ -22,15 +23,26 @@ const inputType = form.querySelector('select[name="type"]');
 const inputTimeIn = form.querySelector('select[name="timein"]');
 const inputTimeOut = form.querySelector('select[name="timeout"]');
 
+const addInvalidClass = (element) => {
+  element.classList.add('ad-form__field--invalid');
+};
+
+const removeInvalidClass = (element) => {
+  element.classList.remove('ad-form__field--invalid');
+};
+
 const onInputTitle = (evt) => {
   const valueLength = evt.currentTarget.value.length;
 
   if (valueLength < MIN_TITLE_LENGTH) {
     inputTitle.setCustomValidity(`До мин. длины не хватает ${MIN_TITLE_LENGTH - valueLength} символов`);
+    addInvalidClass(inputTitle);
   } else if (valueLength > MAX_TITLE_LENGTH) {
     inputTitle.setCustomValidity(`Длинна заголовка превышена на ${valueLength - MAX_TITLE_LENGTH} символов`);
+    addInvalidClass(inputTitle);
   } else {
     inputTitle.setCustomValidity('');
+    removeInvalidClass(inputTitle);
   }
 
   inputTitle.reportValidity();
@@ -42,12 +54,16 @@ const onInputPrice = (evt) => {
 
   if (value < 0) {
     inputPrice.setCustomValidity('Значение цены не может быть отрицательным');
+    addInvalidClass(inputPrice);
   } else if (value < minPrice) {
     inputPrice.setCustomValidity(`Минимальная цена для выбранного типа жилья ${minPrice}`);
+    addInvalidClass(inputPrice);
   } else if (value > MAX_PRICE_VALUE) {
     inputPrice.setCustomValidity(`Максимальная цена за ночь ${MAX_PRICE_VALUE}`);
+    addInvalidClass(inputPrice);
   } else {
     inputPrice.setCustomValidity('');
+    removeInvalidClass(inputPrice);
   }
 
   inputPrice.reportValidity();
@@ -59,36 +75,60 @@ const onInputType = (evt) => {
 
   if (inputPrice.value < minPrice) {
     inputPrice.setCustomValidity(`Минимальная цена для выбранного типа жилья ${minPrice}`);
+    addInvalidClass(inputPrice);
   } else {
     inputPrice.setCustomValidity('');
+    removeInvalidClass(inputPrice);
   }
 
   inputPrice.reportValidity();
 };
 
-const onCheckCapacity = () => {
+const onCheckCapacity = (evt) => {
+  evt.preventDefault();
   const roomsValue = parseInt(inputRooms.value, 10);
   const capacityValue = parseInt(inputCapacity.value, 10);
 
   if (capacityValue > roomsValue) {
     inputCapacity.setCustomValidity('Количество гостей не может превышать количество комнат');
+    addInvalidClass(inputCapacity);
+    form.removeEventListener('submit', onSubmitForm);
   } else if (roomsValue === NOT_FOR_GUESTS_ROOMS && capacityValue !== NOT_FOR_GUESTS_CAPACITY) {
     inputCapacity.setCustomValidity('При выборе 100 комнат, значение Количество мест может быть только "не для гостей"');
+    addInvalidClass(inputCapacity);
+    form.removeEventListener('submit', onSubmitForm);
   } else if (roomsValue !== NOT_FOR_GUESTS_ROOMS && capacityValue === NOT_FOR_GUESTS_CAPACITY) {
     inputRooms.setCustomValidity('При выборе значения "не для гостей", Количество комнат может только 100');
+    addInvalidClass(inputRooms);
+    form.removeEventListener('submit', onSubmitForm);
   } else {
     inputCapacity.setCustomValidity('');
     inputRooms.setCustomValidity('');
+    removeInvalidClass(inputCapacity);
+    removeInvalidClass(inputRooms);
+    form.addEventListener('submit', onSubmitForm);
   }
 
   inputRooms.reportValidity();
   inputCapacity.reportValidity();
 };
 
-const onInputTime = (evt) => {
-  const newTime = evt.currentTarget.value;
-  inputTimeIn.value = newTime;
-  inputTimeOut.value = newTime;
+const onCheckTime = (evt) => {
+  if (evt.type === 'submit') {
+    if (inputTimeIn.value !== inputTimeOut.value) {
+      inputTimeOut.setCustomValidity('Время заезда и выезда не должно отличаться');
+      addInvalidClass(inputTimeOut);
+      form.removeEventListener('submit', onSubmitForm);
+    }
+  } else {
+    const newTime = evt.currentTarget.value;
+    inputTimeIn.value = newTime;
+    inputTimeOut.value = newTime;
+    inputTimeOut.setCustomValidity('');
+    removeInvalidClass(inputTimeOut);
+    form.addEventListener('submit', onSubmitForm);
+  }
+  inputTimeOut.reportValidity();
 };
 
 inputTitle.addEventListener('input', onInputTitle);
@@ -96,5 +136,7 @@ inputPrice.addEventListener('input', onInputPrice);
 inputType.addEventListener('input', onInputType);
 inputRooms.addEventListener('input', onCheckCapacity);
 inputCapacity.addEventListener('input', onCheckCapacity);
-inputTimeIn.addEventListener('input', onInputTime);
-inputTimeOut.addEventListener('input', onInputTime);
+inputTimeIn.addEventListener('input', onCheckTime);
+inputTimeOut.addEventListener('input', onCheckTime);
+form.addEventListener('submit', onCheckCapacity);
+form.addEventListener('submit', onCheckTime);

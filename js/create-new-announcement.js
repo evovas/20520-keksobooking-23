@@ -39,7 +39,7 @@ const onSubmitForm = (evt) => {
 
 form.addEventListener('submit', onSubmitForm);
 
-mainMarker.on('moveend', onMoveEndMainMarker);
+mainMarker.on('move', onMoveEndMainMarker);
 buttonReset.addEventListener('click', onResetPage);
 
 //Здесь предполагается реализация пункта 6 ТЗ

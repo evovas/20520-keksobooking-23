@@ -44,6 +44,4 @@ form.addEventListener('submit', onSubmitForm);
 mainMarker.on('move', onMoveEndMainMarker);
 buttonReset.addEventListener('click', onResetPage);
 
-//Здесь предполагается реализация пункта 6 ТЗ
-
 export {resetPage, onSubmitForm};

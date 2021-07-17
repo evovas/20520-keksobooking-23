@@ -70,6 +70,7 @@ const onInputPrice = (evt) => {
 const onInputType = (evt) => {
   const minPrice = MinPricesForTypes[evt.currentTarget.value.toUpperCase()];
   inputPrice.placeholder = minPrice;
+  inputPrice.min = minPrice;
 
   if (inputPrice.value < minPrice) {
     inputPrice.setCustomValidity(`Минимальная цена для выбранного типа жилья ${minPrice}`);

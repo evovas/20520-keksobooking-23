@@ -25,6 +25,7 @@ const onMoveEndMainMarker = (evt) => {
 const resetPage = () => {
   form.reset();
   inputPrice.placeholder = inputPriceDefaultValue;
+  inputPrice.min = inputPriceDefaultValue;
   resetMainMarker(mainMarker);
   resetFilters();
   resetImages();

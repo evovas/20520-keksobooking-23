@@ -1,5 +1,3 @@
-import './notice-setup-form.js';
-import './images-preview.js';
 import {showSuccessMessage, showErrorMessage} from './util.js';
 import {createMainMarker, resetMainMarker} from './render-map.js';
 import {sendNoticeData} from './fetch-api.js';

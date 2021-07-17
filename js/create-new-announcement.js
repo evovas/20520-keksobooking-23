@@ -5,6 +5,7 @@ import {createMainMarker, resetMainMarker} from './render-map.js';
 import {sendNoticeData} from './fetch-api.js';
 import {resetFilters} from './filter-announcements.js';
 import {resetImages} from './images-preview.js';
+import {isValid} from './notice-setup-form.js';
 
 const DEFAULT_COORDINATE_ROUNDING = 5;
 
@@ -34,9 +35,10 @@ const onResetPage = () => {
 const onSubmitForm = (evt) => {
   evt.preventDefault();
 
-  const formData = new FormData(evt.target);
-
-  sendNoticeData(formData, showSuccessMessage, showErrorMessage);
+  if(isValid()) {
+    const formData = new FormData(evt.target);
+    sendNoticeData(formData, showSuccessMessage, showErrorMessage);
+  }
 };
 
 form.addEventListener('submit', onSubmitForm);

@@ -1,5 +1,3 @@
-import {onSubmitForm} from './create-new-announcement.js';
-
 const MIN_TITLE_LENGTH = 30;
 const MAX_TITLE_LENGTH = 100;
 const MAX_PRICE_VALUE = 1000000;
@@ -92,21 +90,17 @@ const onCheckCapacity = (evt) => {
   if (capacityValue > roomsValue) {
     inputCapacity.setCustomValidity('Количество гостей не может превышать количество комнат');
     addInvalidClass(inputCapacity);
-    form.removeEventListener('submit', onSubmitForm);
   } else if (roomsValue === NOT_FOR_GUESTS_ROOMS && capacityValue !== NOT_FOR_GUESTS_CAPACITY) {
     inputCapacity.setCustomValidity('При выборе 100 комнат, значение Количество мест может быть только "не для гостей"');
     addInvalidClass(inputCapacity);
-    form.removeEventListener('submit', onSubmitForm);
   } else if (roomsValue !== NOT_FOR_GUESTS_ROOMS && capacityValue === NOT_FOR_GUESTS_CAPACITY) {
     inputRooms.setCustomValidity('При выборе значения "не для гостей", Количество комнат может только 100');
     addInvalidClass(inputRooms);
-    form.removeEventListener('submit', onSubmitForm);
   } else {
     inputCapacity.setCustomValidity('');
     inputRooms.setCustomValidity('');
     removeInvalidClass(inputCapacity);
     removeInvalidClass(inputRooms);
-    form.addEventListener('submit', onSubmitForm);
   }
 
   inputRooms.reportValidity();
@@ -118,7 +112,6 @@ const onCheckTime = (evt) => {
     if (inputTimeIn.value !== inputTimeOut.value) {
       inputTimeOut.setCustomValidity('Время заезда и выезда не должно отличаться');
       addInvalidClass(inputTimeOut);
-      form.removeEventListener('submit', onSubmitForm);
     }
   } else {
     const newTime = evt.currentTarget.value;
@@ -126,10 +119,13 @@ const onCheckTime = (evt) => {
     inputTimeOut.value = newTime;
     inputTimeOut.setCustomValidity('');
     removeInvalidClass(inputTimeOut);
-    form.addEventListener('submit', onSubmitForm);
   }
   inputTimeOut.reportValidity();
 };
+
+const isValid = () => inputRooms.reportValidity()
+  && inputCapacity.reportValidity()
+  && inputTimeOut.reportValidity();
 
 inputTitle.addEventListener('input', onInputTitle);
 inputPrice.addEventListener('input', onInputPrice);
@@ -140,3 +136,5 @@ inputTimeIn.addEventListener('input', onCheckTime);
 inputTimeOut.addEventListener('input', onCheckTime);
 form.addEventListener('submit', onCheckCapacity);
 form.addEventListener('submit', onCheckTime);
+
+export {isValid};

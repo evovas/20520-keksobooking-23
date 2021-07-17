@@ -4,6 +4,7 @@ import {showSuccessMessage, showErrorMessage} from './util.js';
 import {createMainMarker, resetMainMarker} from './render-map.js';
 import {sendNoticeData} from './fetch-api.js';
 import {resetFilters} from './filter-announcements.js';
+import {resetImages} from './images-preview.js';
 
 const DEFAULT_COORDINATE_ROUNDING = 5;
 
@@ -23,6 +24,7 @@ const resetPage = () => {
   form.reset();
   resetMainMarker(mainMarker);
   resetFilters();
+  resetImages();
 };
 
 const onResetPage = () => {

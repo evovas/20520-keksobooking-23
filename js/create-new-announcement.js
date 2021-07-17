@@ -1,15 +1,16 @@
-import './notice-setup-form.js';
-import './images-preview.js';
 import {showSuccessMessage, showErrorMessage} from './util.js';
 import {createMainMarker, resetMainMarker} from './render-map.js';
 import {sendNoticeData} from './fetch-api.js';
 import {resetFilters} from './filter-announcements.js';
+import {resetImages} from './images-preview.js';
+import {isValid} from './notice-setup-form.js';
 
 const DEFAULT_COORDINATE_ROUNDING = 5;
 
-const notice = document.querySelector('.notice');
-const form = notice.querySelector('.ad-form');
+const form = document.querySelector('.notice .ad-form');
 const inputAddress = form.querySelector('input[name="address"]');
+const inputPrice = form.querySelector('input[name="price"]');
+const inputPriceDefaultValue = inputPrice.placeholder;
 const buttonReset = form.querySelector('button[type="reset"]');
 
 const mainMarker = createMainMarker();
@@ -21,8 +22,11 @@ const onMoveEndMainMarker = (evt) => {
 
 const resetPage = () => {
   form.reset();
+  inputPrice.placeholder = inputPriceDefaultValue;
+  inputPrice.min = inputPriceDefaultValue;
   resetMainMarker(mainMarker);
   resetFilters();
+  resetImages();
 };
 
 const onResetPage = () => {
@@ -32,16 +36,15 @@ const onResetPage = () => {
 const onSubmitForm = (evt) => {
   evt.preventDefault();
 
-  const formData = new FormData(evt.target);
-
-  sendNoticeData(formData, showSuccessMessage, showErrorMessage);
+  if(isValid()) {
+    const formData = new FormData(evt.target);
+    sendNoticeData(formData, showSuccessMessage, showErrorMessage);
+  }
 };
 
 form.addEventListener('submit', onSubmitForm);
 
 mainMarker.on('move', onMoveEndMainMarker);
 buttonReset.addEventListener('click', onResetPage);
-
-//Здесь предполагается реализация пункта 6 ТЗ
 
 export {resetPage, onSubmitForm};

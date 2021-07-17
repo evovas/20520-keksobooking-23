@@ -289,6 +289,7 @@ fieldset {
 }
 
 .ad-form-header__preview {
+  position: relative;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -310,8 +311,15 @@ fieldset {
   background-size: 70px;
 }
 
-.ad-form-header__preview--replaced {
-  padding: 0;
+.ad-form-header__preview-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  width: 70px;
+  height: 70px;
+
+  border-radius: 5px;
 }
 
 .ad-form__field {
@@ -588,6 +596,13 @@ fieldset {
   background-color: #e4e4de;
   border-radius: 5px;
   background-size: auto 70px;
+}
+
+.ad-form__photo-image {
+  width: 70px;
+  height: 70px;
+
+  border-radius: 5px;
 }
 
 .ad-form__element--submit {

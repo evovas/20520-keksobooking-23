@@ -88,6 +88,11 @@ const onCheckCapacity = (evt) => {
   const roomsValue = parseInt(inputRooms.value, 10);
   const capacityValue = parseInt(inputCapacity.value, 10);
 
+  inputCapacity.setCustomValidity('');
+  inputRooms.setCustomValidity('');
+  removeInvalidClass(inputCapacity);
+  removeInvalidClass(inputRooms);
+
   if (capacityValue > roomsValue) {
     inputCapacity.setCustomValidity('Количество гостей не может превышать количество комнат');
     addInvalidClass(inputCapacity);
@@ -97,11 +102,6 @@ const onCheckCapacity = (evt) => {
   } else if (roomsValue !== NOT_FOR_GUESTS_ROOMS && capacityValue === NOT_FOR_GUESTS_CAPACITY) {
     inputRooms.setCustomValidity('При выборе значения "не для гостей", Количество комнат может только 100');
     addInvalidClass(inputRooms);
-  } else {
-    inputCapacity.setCustomValidity('');
-    inputRooms.setCustomValidity('');
-    removeInvalidClass(inputCapacity);
-    removeInvalidClass(inputRooms);
   }
 
   inputRooms.reportValidity();

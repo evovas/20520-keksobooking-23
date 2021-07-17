@@ -9,9 +9,10 @@ import {isValid} from './notice-setup-form.js';
 
 const DEFAULT_COORDINATE_ROUNDING = 5;
 
-const notice = document.querySelector('.notice');
-const form = notice.querySelector('.ad-form');
+const form = document.querySelector('.notice .ad-form');
 const inputAddress = form.querySelector('input[name="address"]');
+const inputPrice = form.querySelector('input[name="price"]');
+const inputPriceDefaultValue = inputPrice.placeholder;
 const buttonReset = form.querySelector('button[type="reset"]');
 
 const mainMarker = createMainMarker();
@@ -23,6 +24,7 @@ const onMoveEndMainMarker = (evt) => {
 
 const resetPage = () => {
   form.reset();
+  inputPrice.placeholder = inputPriceDefaultValue;
   resetMainMarker(mainMarker);
   resetFilters();
   resetImages();

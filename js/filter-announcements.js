@@ -62,9 +62,9 @@ const isSelectedFeature = (announcement, checkbox) => {
 };
 
 const filterAnnouncements = (announcements) => {
-  const result =[];
+  const filteredOffers =[];
   for (let ind = 0; ind < announcements.length; ind++) {
-    if (result.length === MAX_COUNT_ANNOUNCEMENTS) {
+    if (filteredOffers.length === MAX_COUNT_ANNOUNCEMENTS) {
       break;
     }
     if (isSelectedHouseType(announcements[ind])
@@ -77,13 +77,13 @@ const filterAnnouncements = (announcements) => {
       && isSelectedFeature(announcements[ind], checkboxWasher)
       && isSelectedFeature(announcements[ind], checkboxElevator)
       && isSelectedFeature(announcements[ind], checkboxConditioner)) {
-      result.push(announcements[ind]);
+      filteredOffers.push(announcements[ind]);
     }
   }
-  return result;
+  return filteredOffers;
 };
 
-const applyFilters = function (announcements) {
+const applyFilters = (announcements) => {
   createMarkerGroup(announcements);
   const onCreateMarkerGroupDebounced = debounce(() => createMarkerGroup(announcements), RERENDER_DELAY);
   filter.addEventListener('change', onCreateMarkerGroupDebounced);

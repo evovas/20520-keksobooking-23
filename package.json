@@ -20,7 +20,7 @@
     "follow-redirects": ">=1.14.8",
     "path-parse": ">=1.0.7",
     "ws": ">=7.4.6",
-    "engine.io": ">=4.0.0"
+    "engine.io": ">=6.2.1"
   },
   "license": "MIT",
   "scripts": {
